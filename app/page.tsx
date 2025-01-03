@@ -16,13 +16,16 @@ import { IconPhFactory } from "@/components/logos/IconPhFactory";
 import { Counter } from "@/components/counter";
 import Container from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { CheckboxDemo } from "@/components/ui/dark-mode-toggle-checkbox";
 
 export default function Home() {
   return (
     <>
       <Container className=" mt-4 h-[200vh]">
       {/* h-[90vh] */}
-
+      <div className="block">
+      <CheckboxDemo />
+    </div>
         <Counter />
         <h2  >Home</h2>
         <p className="text-justify-centre">

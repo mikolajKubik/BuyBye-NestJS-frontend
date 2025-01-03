@@ -13,6 +13,9 @@ import { Menu } from "lucide-react";
 import { IconPhFactory } from "@/components/logos/IconPhFactory";
 import Link from 'next/link';
 import { ConfettiButton } from './ui/confetti';
+import { Cart } from './logos/cart';
+import { ModeToggle } from './ui/mode-toggle';
+import { CheckboxDemo } from './ui/dark-mode-toggle-checkbox';
 
 export default function DefaultNavbar() {
   return (
@@ -24,7 +27,7 @@ export default function DefaultNavbar() {
             <NavbarLeft>
               <Link
                 href="/"
-                className="flex items-center gap-2 text-xl font-bold"
+                className="flex items-center gap-2 text-xl font-bold text-xl"
               >
                 <IconPhFactory />
                 Buy&Bye
@@ -33,15 +36,16 @@ export default function DefaultNavbar() {
             {/* <NavbarCenter>
             </NavbarCenter> */}
 
-            
+
             <NavbarRight>
-            <Navigation />
-            {/* <a href="/" className="hidden text-sm md:block">
+              <Navigation />
+              <CheckboxDemo />
+              {/* <a href="/" className="hidden text-sm md:block">
                     Sign in
                   </a> */}
 
               {/* <Button variant="default" asChild>
-                <a href="/">Get Started</a>
+                
               </Button> */}
               <Sheet>
                 <SheetTrigger asChild>
