@@ -1,52 +1,66 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Moon, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-
 function CheckboxDemo() {
-  // const [theme, setTheme] = useState<string>("light");
-    const { theme, setTheme } = useTheme();
-  
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  // Ensure the component is mounted to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const cycleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else if (theme === "dark") {
+      setTheme("system");
+    } else {
+      setTheme("light");
+    }
+  };
+
+  if (!mounted) {
+    // Avoid rendering until mounted to prevent mismatch
+    return null;
+  }
 
   return (
-    // <div className="space-y-4">
-    //   <legend className="text-sm font-medium leading-none text-foreground">
-    //     Dark mode toggle checkbox
-    //   </legend>
-      <div className="flex flex-col justify-center">
-        <input
-          type="checkbox"
-          name="theme-checkbox"
-          id="theme-checkbox"
-          className="peer sr-only"
-          checked={theme === "dark"}
-          onChange={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+    <div className="flex flex-col justify-center">
+      <button
+        onClick={cycleTheme}
+        className="group relative inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-input bg-background text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-opacity-70"
+        aria-label={`Switch theme (current: ${theme})`}
+      >
+        <Moon
+          size={16}
+          strokeWidth={2}
+          className={`absolute transition-all ${
+            theme === "dark" ? "scale-100 opacity-100" : "scale-0 opacity-0"
+          }`}
+          aria-hidden="true"
         />
-        <label
-          className="group relative inline-flex size-9 cursor-pointer items-center justify-center rounded-lg border border-input bg-background text-foreground shadow-sm shadow-black/5 transition-colors hover:bg-accent hover:text-accent-foreground peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-ring/70"
-          // className="group relative inline-flex size-9 cursor-pointer items-center justify-center rounded-lg text-foreground  hover:bg-accent hover:text-accent-foreground peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-ring/70"
-          
-          htmlFor="theme-checkbox"
-          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-        >
-          <span className="group-[]:hidden">Light</span>
-          <Moon
-            size={16}
-            strokeWidth={2}
-            className="shrink-0 scale-0 opacity-0 transition-all peer-checked:group-[]:scale-100 peer-checked:group-[]:opacity-100"
-            aria-hidden="true"
-          />
-          <Sun
-            size={16}
-            strokeWidth={2}
-            className="absolute shrink-0 scale-100 opacity-100 transition-all peer-checked:group-[]:scale-0 peer-checked:group-[]:opacity-0"
-            aria-hidden="true"
-          />
-        </label>
-      </div>
-    // </div>
+        <Sun
+          size={16}
+          strokeWidth={2}
+          className={`absolute transition-all ${
+            theme === "light" || !theme ? "scale-100 opacity-100" : "scale-0 opacity-0"
+          }`}
+          aria-hidden="true"
+        />
+        <SunMoon
+          size={16}
+          strokeWidth={2}
+          className={`absolute transition-all ${
+            theme === "system" ? "scale-100 opacity-100" : "scale-0 opacity-0"
+          }`}
+          aria-hidden="true"
+        />
+      </button>
+    </div>
   );
 }
 

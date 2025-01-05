@@ -27,7 +27,7 @@ export default function DefaultNavbar() {
             <NavbarLeft>
               <Link
                 href="/"
-                className="flex items-center gap-2 text-xl font-bold text-xl"
+                className="flex items-center gap-2 text-xl font-bold"
               >
                 <IconPhFactory />
                 Buy&Bye
@@ -50,7 +50,7 @@ export default function DefaultNavbar() {
               <Sheet>
                 <SheetTrigger asChild>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="icon"
                     className="shrink-0 md:hidden"
                   >

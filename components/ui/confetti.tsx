@@ -111,14 +111,17 @@ interface ConfettiButtonProps extends ButtonProps {
   options?: ConfettiOptions &
     ConfettiGlobalOptions & { canvas?: HTMLCanvasElement };
   children?: React.ReactNode;
+  triggerConfetti?: boolean; // New prop
 }
 
 const ConfettiButtonComponent = ({
   options,
   children,
+  triggerConfetti = true, // Default to true
   ...props
 }: ConfettiButtonProps) => {
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!triggerConfetti) return; // Check if confetti should be triggered
     try {
       const rect = event.currentTarget.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
