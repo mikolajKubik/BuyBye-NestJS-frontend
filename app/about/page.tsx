@@ -9,6 +9,7 @@ import Tailwind from "@/components/logos/tailwind";
 import TypeScript from "@/components/logos/typescript";
 import Logo from "@/components/ui/logo";
 import { Section } from "@/components/ui/section";
+import { useToast } from '@/hooks/use-toast';
 
 export default function page() {
     const router = useRouter()
@@ -34,7 +35,29 @@ export default function page() {
                     onClick={() => router.push('/')}
                     className='m-4'
                 >Home</Button>
+                <ToastWithTitle />
             </Container>
         </>
     )
 }
+
+
+
+export function ToastWithTitle() {
+  const { toast } = useToast()
+
+  return (
+    <Button
+      variant="destructive"
+      onClick={() => {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+        })
+      }}
+    >
+      Show Toast
+    </Button>
+  )
+}
+

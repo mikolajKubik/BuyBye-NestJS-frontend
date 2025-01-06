@@ -37,97 +37,85 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Pencil2Icon } from "@radix-ui/react-icons";
+import { Product } from "./columns";
 
+interface SheetUpdateProps {
+    product: Product;
+}
 
-export function SheetDemo() {
+export function SheetUpdate({ product }: SheetUpdateProps) {
     const { toast } = useToast()
     const form = useForm<CreateProductInput>({
-        resolver: zodResolver(createProductSchema),
-        mode: "onChange", // Add this line to enable validation on change
-        // defaultValues: {
-        //     name: "",
-        //     description: "",
-        //     price: undefined,
-        //     weight: undefined,
-        //     categoryName: "",
-        //     stock: undefined,
-        // },
+        defaultValues: {
+            name: product.name,
+            description: product.description,
+            price: parseFloat(product.price),
+            weight: parseFloat(product.weight),
+            categoryName: product.category.name,
+            stock: product.stock,
+        },
     });
 
     const onSubmit = async (data: CreateProductInput) => {
-        // if (!form.formState.isValid) {
-        //     toast({
-        //         title: "Validation Error",
-        //         description: "Please fill all required fields correctly",
-        //         variant: "destructive",
-        //     });
-        //     return;
-        // }
-
         try {
-            const response = await fetch('http://localhost:3000/products', {
-                method: 'POST',
+            const response = await fetch(`http://localhost:3000/products/${product.id}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             });
-
+    
             if (!response.ok) {
-                const errorBody = await response.text();
-                console.error("Error saving product:", errorBody);
-                throw new Error('Failed to create product');
+                const errorData = await response.json();
+                
+                // Check for validation errors
+                if (errorData["invalid-params"]) {
+                    const errorMessages = errorData["invalid-params"]
+                        .map((param: { name: string; reason: string }) => 
+                            `${param.name.charAt(0).toUpperCase() + param.name.slice(1)} ${param.reason}. `
+                        )
+                        .join("\n");
+                    
+                    toast({
+                        title: "Validation Error",
+                        description: errorMessages,
+                        variant: "destructive",
+                    });
+                    form.reset();
+                    return;
+                }
+    
+                // Generic error if no invalid-params
+                throw new Error('Failed to update product');
             }
-
+    
             toast({
                 title: "Success",
-                description: "Product created successfully",
+                description: "Product updated successfully",
                 variant: "default",
             });
-
-            // Reset form or close sheet here
+    
             form.reset();
-
+    
         } catch (error) {
             toast({
                 title: "Error",
-                description: "Failed to create product. Please try again.",
+                description: "Failed to update product. Please try again.",
                 variant: "destructive",
             });
         }
-        // try {
-        //     const response = await fetch("http://localhost:3000/products", {
-        //         method: "POST",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify(data),
-        //     });
-
-        //     if (response.ok) {
-        //         console.log("Product saved successfully.");
-        //         form.reset();
-        //     } else {
-        //         const errorBody = await response.text();
-        //         console.error("Error saving product:", errorBody);
-        //     }
-        // } catch (error) {
-        //     console.error("Fetch error:", error);
-        // }
     };
 
     return (
-        <Sheet
-        //     open={isOpen}
-        // onOpenChange={(newValue) => {
-        //   if (newValue) setIsOpen(true); // when it's closed, allow opening it
-
-        //   // when it's opened
-        //   if (form.formState.isValid) setIsOpen(newValue);
-
-        // otherwise, don't do anything
-        // }}
-        >
+        <Sheet>
             <SheetTrigger asChild>
-                <Button variant="outline">Add Product</Button>
+                <Button variant="ghost" size="icon">
+                <Pencil2Icon className="h-4 w-4" />
+                </Button>
+                
             </SheetTrigger>
             <SheetContent className="overflow-y-auto">
                 <SheetHeader>
@@ -229,7 +217,11 @@ export function SheetDemo() {
                             render={({ field }) => (
                                 <FormItem>
                                     <Label htmlFor="categoryName">Category</Label>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select 
+                                        onValueChange={field.onChange} 
+                                        value={field.value.toLowerCase()} // Add this line
+                                        defaultValue={field.value.toLowerCase()} // Add toLowerCase()
+                                    >
                                         <FormControl>
                                             <SelectTrigger className="border-transparent bg-muted shadow-none">
                                                 <SelectValue placeholder="Select category" />
@@ -275,9 +267,9 @@ export function SheetDemo() {
 
                         {/* Submit Button */}
                         <SheetFooter >
-                            {/* <SheetClose asChild>
+                            <SheetClose asChild>
                                 <div className="relative mt-4">
-                                    <ConfettiButton triggerConfetti={form.formState.isValid} variant="secondary" options={{
+                                    <ConfettiButton triggerConfetti={false} variant="secondary" options={{
                                         get angle() {
                                             const screenWidth = window.innerWidth;
                                             const screenHeight = window.innerHeight;
@@ -288,45 +280,13 @@ export function SheetDemo() {
                                             return finalAngle;
                                         },
                                     }} type="submit"
-                                    
-                                    >Save Product 
+
+                                    >Save Product
                                     </ConfettiButton>
                                 </div>
-                             </SheetClose> */}
-                             
-                            {form.formState.isValid ? (
-                                <SheetClose asChild>
-                                    <div className="relative mt-4">
-                                    <ConfettiButton
-                                        triggerConfetti={form.formState.isValid}
-                                        variant="secondary"
-                                        type="submit"
-                                        options={{
-                                            get angle() {
-                                                const screenWidth = window.innerWidth;
-                                                const screenHeight = window.innerHeight;
-                                                const angleRad = Math.atan(screenHeight / screenWidth);
-                                                const angleDeg = angleRad * (180 / Math.PI);
-                                                const finalAngle = 180 - (1.6 * angleDeg);
-                                                console.log(`Angle (Degrees): ${finalAngle}, Width: ${screenWidth}, Height: ${screenHeight}`);
-                                                return finalAngle;
-                                            },
-                                        }}
-                                    >
-                                        Save Product
-                                    </ConfettiButton>
-                                    </div>
-                                </SheetClose>
-                            ) : (
-                                <ConfettiButton
-                                    triggerConfetti={form.formState.isValid}
-                                    variant="secondary"
-                                    type="submit"
-                                    
-                                >
-                                    Save Product
-                                </ConfettiButton>
-                            )}
+                            </SheetClose>
+
+
                         </SheetFooter>
                     </form>
                 </Form>

@@ -4,6 +4,8 @@ import "./globals.css";
 import DefaultNavbar from "@/components/nav";
 import DefaultFooter from "@/components/foot";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster"
+// import { ThemeProvider, useTheme } from "next-themes";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,24 +33,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {/* flex flex-col min-h-screen */}
           <DefaultNavbar />
-          {/* {children} */}
           <main className="flex-grow">{children}</main>
-
+          <Toaster />
           <DefaultFooter />
-
-
         </ThemeProvider>
-
-
       </body>
     </html>
   );
 }
+

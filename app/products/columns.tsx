@@ -19,6 +19,8 @@ import {
     DropdownMenuRadioItem,
   } from "@/components/ui/dropdown-menu"
   import { FilterIcon } from "lucide-react"
+import { useToast } from '@/hooks/use-toast';
+import { SheetUpdate } from './update-product';
   
 
 export type Product = {
@@ -28,7 +30,12 @@ export type Product = {
     stock: number;
     price: string;
     weight: string;
-    category: string; // Simplified to just a string
+    category: Category; // Simplified to just a string
+};
+
+export type Category = {
+    id: string;
+    name: string;
 };
 
 export const columns: ColumnDef<Product>[] = [
@@ -42,15 +49,42 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "stock",
-        header: "Stock",
+        header: () => (
+            <div className="text-center">
+                Stock
+            </div>
+        ),
+        cell: ({ row }) => (
+            <div className="text-center">
+                {row.original.stock}
+            </div>
+        ),
     },
     {
         accessorKey: "price",
-        header: "Price",
+        header: () => (
+            <div className="text-right">
+                Price
+            </div>
+        ),
+        cell: ({ row }) => (
+            <div className="text-right">
+                {row.original.price} EUR
+            </div>
+        ),
     },
     {
         accessorKey: "weight",
-        header: "Weight",
+        header: () => (
+            <div className="text-right">
+                Weight
+            </div>
+        ),
+        cell: ({ row }) => (
+            <div className="text-right">
+                {row.original.weight} kg
+            </div>
+        ),
     },
     {
         accessorKey: "category.name", // Access only the name field of the category
@@ -64,19 +98,19 @@ export const columns: ColumnDef<Product>[] = [
                 //     Category
                 //     <ArrowUpDown className="ml-2 h-4 w-4" />
                 //   </Button>
-                <div className="flex items-center space-x-2">
+                <div className="text-center flex items-center justify-center space-x-2 ">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button
                                 variant="ghost"
-                                size="sm"
-                                className="-ml-3 h-8 data-[state=open]:bg-accent"
+                                // size="sm"
+                                className="h-8 data-[state=open]:bg-accent" // -ml-3 
                             >
                                 <span>Category</span>
                                 <FilterIcon className="ml-2 h-4 w-4" />
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="w-[200px]">
+                        <DropdownMenuContent align="center" className="w-[200px]">
                             <DropdownMenuRadioGroup
                                 value={(column.getFilterValue() as string) ?? "all"}
                                 onValueChange={(value: string) => {
@@ -88,6 +122,8 @@ export const columns: ColumnDef<Product>[] = [
                                 }}
                             >
                                 <DropdownMenuRadioItem value="all">All Categories</DropdownMenuRadioItem>
+                                  <DropdownMenuSeparator />
+
                                 <DropdownMenuRadioItem value="books">Books</DropdownMenuRadioItem>
                                 <DropdownMenuRadioItem value="clothing">Clothing</DropdownMenuRadioItem>
                                 <DropdownMenuRadioItem value="electronics">Electronics</DropdownMenuRadioItem>
@@ -97,34 +133,66 @@ export const columns: ColumnDef<Product>[] = [
                     </DropdownMenu>
                 </div>
             )
+            
         },
+        cell: ({ row }) => (
+            <div className="text-center">
+                {row.original.category.name}
+            </div>
+        ),
     },
     {
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const product = row.original
+            const { toast } = useToast()
 
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
-                        >
-                            Copy payment ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <SheetUpdate product={product} />
             )
         },
     },
 ];
+
+
+// {
+//     id: "actions",
+//     cell: ({ row }) => {
+//         const product = row.original
+//         const { toast } = useToast()
+
+//         return (
+//             <DropdownMenu >
+//                 <DropdownMenuTrigger asChild>
+//                     <Button variant="ghost" className="h-8 w-8 p-0">
+//                         <span className="sr-only">Open menu</span>
+//                         <MoreHorizontal className="h-4 w-4" />
+//                     </Button>
+//                 </DropdownMenuTrigger>
+//                 <DropdownMenuContent align="center">
+//                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
+//                     <DropdownMenuItem
+//                         onClick={() => {
+//                             navigator.clipboard.writeText(product.id)
+//                             toast({
+//                                 title: "Copied successfully",
+//                                 description: `Product ID: ${product.id}`,
+//                             })
+//                         }}
+//                     >
+//                         Copy ID
+//                     </DropdownMenuItem>
+//                     <DropdownMenuItem>Edit</DropdownMenuItem>
+//                     <SheetUpdate />
+//                     <DropdownMenuSeparator />
+//                     <DropdownMenuItem onClick={() => {
+//                             toast({
+//                                 // title: "To be implemented🫣",
+//                                 description: `To be implemented 🫣`,
+//                             })
+//                         }} className='text-red-600'>Delete</DropdownMenuItem>
+//                 </DropdownMenuContent>
+//             </DropdownMenu>
+//         )
+//     },
+// },

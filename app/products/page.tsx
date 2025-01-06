@@ -1,6 +1,6 @@
 // "use client";
 import dynamic from 'next/dynamic'
-import { DataTable } from '@/components/data-table';
+import { DataTable } from '@/app/products/data-table';
 import { Product, columns } from './columns'; // Adjust the import path as needed
 import Container from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { ConfettiButton } from '@/components/ui/confetti';
 // const ComponentC = dynamic(() => import('../components/data-table'), { ssr: false })
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { revalidatePath } from 'next/cache'
 import {
     Sheet,
     SheetClose,
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/sheet"
 import { useState } from "react";
 import { SheetDemo } from './add-product';
+import { RefreshCcw } from "lucide-react"
 
 // Fetch products from the specified API
 async function getProducts(): Promise<Product[]> {
@@ -33,6 +35,13 @@ async function getProducts(): Promise<Product[]> {
     }
     const data = await res.json();
     return data;
+}
+
+
+// Add refresh action
+export async function refreshData() {
+    'use server'
+    revalidatePath('/products')
 }
 
 // Page component to display the table
@@ -49,12 +58,39 @@ export default async function Page() {
                         <Button>Add Product</Button>
                         <SheetDemo />
                     </div> */}
-                    <h1 className="text-3xl font-bold mb-6">All Products</h1>
+                    <div className="flex justify-between items-center mb-2">
+                        <h1 className="text-3xl font-bold mb-0  mt-[-1rem] ">All Products</h1>
+                        <RefreshTable />
+
+
+                    </div>
 
                     <DataTable columns={columns} data={data} />
+
+
+
                 </div>
             </section>
         </Container>
 
     );
+}
+
+
+export function RefreshTable() {
+    return (
+        <div className=''>
+
+            <form action={refreshData}>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    type="submit"
+                >
+                    <RefreshCcw className="h-4 w-4 " />
+                </Button>
+            </form>
+        </div>
+
+    )
 }
