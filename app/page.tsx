@@ -1,3 +1,4 @@
+
 import { Navbar, NavbarCenter } from "@/components/ui/navbar";
 import Navigation from "@/components/ui/navigation";
 import Image from "next/image";
@@ -17,6 +18,7 @@ import { Counter } from "@/components/counter";
 import Container from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { CheckboxDemo } from "@/components/ui/dark-mode-toggle-checkbox";
+import SidePanelExample from "@/components/SidePanelExample";
 
 export default function Home() {
   return (

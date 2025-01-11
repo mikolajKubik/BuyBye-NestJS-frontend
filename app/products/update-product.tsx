@@ -119,9 +119,9 @@ export function SheetUpdate({ product }: SheetUpdateProps) {
             </SheetTrigger>
             <SheetContent className="overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>Add Product</SheetTitle>
+                    <SheetTitle>Edit Product</SheetTitle>
                     <SheetDescription>
-                        Enter the product details below.
+                        Change the product details below.
                     </SheetDescription>
                 </SheetHeader>
                 <Form {...form}>

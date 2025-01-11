@@ -5,6 +5,8 @@ import DefaultNavbar from "@/components/nav";
 import DefaultFooter from "@/components/foot";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
+import GridPattern from "@/components/ui/grid-pattern";
+import { cn } from "@/lib/utils";
 // import { ThemeProvider, useTheme } from "next-themes";
 
 const geistSans = localFont({
@@ -33,7 +35,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        
+        <div className="fixed inset-0 z-0">
+        <GridPattern
+          width={20}
+          height={20}
+          x={-1}
+          y={-1}
+          className={cn(
+            "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]",
+            "opacity-20" // Added for subtle effect
+          )}
+        />
+      </div>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
