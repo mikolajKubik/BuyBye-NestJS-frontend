@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { ConfettiButton } from "@/components/ui/confetti";
+import { useRouter } from 'next/navigation';
 import {
     Form,
     FormControl,
@@ -54,6 +55,8 @@ export function SheetDemo() {
         // },
     });
 
+    const router = useRouter();
+
     const onSubmit = async (data: CreateProductInput) => {
         // if (!form.formState.isValid) {
         //     toast({
@@ -78,6 +81,8 @@ export function SheetDemo() {
                 console.error("Error saving product:", errorBody);
                 throw new Error('Failed to create product');
             }
+            
+            router.refresh();
 
             toast({
                 title: "Success",

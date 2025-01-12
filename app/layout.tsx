@@ -35,15 +35,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <div className="fixed inset-0 z-0">
+        <div className="fixed inset-0 z-[-1]">
         <GridPattern
-          width={20}
-          height={20}
+          width={30}
+          height={30}
           x={-1}
           y={-1}
           className={cn(
-            "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]",
-            "opacity-20" // Added for subtle effect
+            "[mask-image:linear-gradient(to_top_right,white,transparent,transparent)]",
+            "opacity-20" // Added for subtle effect 20
           )}
         />
       </div>

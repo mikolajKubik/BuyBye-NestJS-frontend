@@ -142,6 +142,18 @@ export const columns: ColumnDef<Product>[] = [
         ),
     },
     {
+        id: "add-to-cart",
+        cell: ({ row }) => (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {}}
+          >
+            Add to Cart
+          </Button>
+        ),
+      },
+    {
         id: "actions",
         cell: ({ row }) => {
             const product = row.original
@@ -154,45 +166,3 @@ export const columns: ColumnDef<Product>[] = [
     },
 ];
 
-
-// {
-//     id: "actions",
-//     cell: ({ row }) => {
-//         const product = row.original
-//         const { toast } = useToast()
-
-//         return (
-//             <DropdownMenu >
-//                 <DropdownMenuTrigger asChild>
-//                     <Button variant="ghost" className="h-8 w-8 p-0">
-//                         <span className="sr-only">Open menu</span>
-//                         <MoreHorizontal className="h-4 w-4" />
-//                     </Button>
-//                 </DropdownMenuTrigger>
-//                 <DropdownMenuContent align="center">
-//                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-//                     <DropdownMenuItem
-//                         onClick={() => {
-//                             navigator.clipboard.writeText(product.id)
-//                             toast({
-//                                 title: "Copied successfully",
-//                                 description: `Product ID: ${product.id}`,
-//                             })
-//                         }}
-//                     >
-//                         Copy ID
-//                     </DropdownMenuItem>
-//                     <DropdownMenuItem>Edit</DropdownMenuItem>
-//                     <SheetUpdate />
-//                     <DropdownMenuSeparator />
-//                     <DropdownMenuItem onClick={() => {
-//                             toast({
-//                                 // title: "To be implemented🫣",
-//                                 description: `To be implemented 🫣`,
-//                             })
-//                         }} className='text-red-600'>Delete</DropdownMenuItem>
-//                 </DropdownMenuContent>
-//             </DropdownMenu>
-//         )
-//     },
-// },

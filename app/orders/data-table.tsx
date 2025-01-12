@@ -24,7 +24,6 @@ import {
 
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
-import { SheetDemo } from "@/app/products/add-product"
 import { Button } from "../../components/ui/button"
 
 interface DataTableProps<TData, TValue> {
@@ -67,19 +66,16 @@ export function DataTable<TData, TValue>({
         <>
        
         <div className="flex justify-between items-center mb-3">
-                {/* <h1 className="text-3xl font-bold">All Products</h1> */}
-                {/* <Button>Add Product</Button> */}
                 <div className="flex items-center mr-2 ">
                     <Input
-                        placeholder="Filter products..."
-                        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                        placeholder="Filter orders..."
+                        value={(table.getColumn("username")?.getFilterValue() as string) ?? ""}
                         onChange={(event) =>
-                            table.getColumn("name")?.setFilterValue(event.target.value)
+                            table.getColumn("username")?.setFilterValue(event.target.value)
                         }
                         className="max-w-sm bg-background"
                     />
                 </div>
-                <SheetDemo />
                 {/* <RefreshTable /> */}
                 
                 

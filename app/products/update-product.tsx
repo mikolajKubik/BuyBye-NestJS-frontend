@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { ConfettiButton } from "@/components/ui/confetti";
+import { useRouter } from 'next/navigation';
 import {
     Form,
     FormControl,
@@ -58,6 +59,8 @@ export function SheetUpdate({ product }: SheetUpdateProps) {
         },
     });
 
+    const router = useRouter();
+
     const onSubmit = async (data: CreateProductInput) => {
         try {
             const response = await fetch(`http://localhost:3000/products/${product.id}`, {
@@ -69,6 +72,8 @@ export function SheetUpdate({ product }: SheetUpdateProps) {
             });
     
             if (!response.ok) {
+                
+                
                 const errorData = await response.json();
                 
                 // Check for validation errors
@@ -91,7 +96,7 @@ export function SheetUpdate({ product }: SheetUpdateProps) {
                 // Generic error if no invalid-params
                 throw new Error('Failed to update product');
             }
-    
+        router.refresh();
             toast({
                 title: "Success",
                 description: "Product updated successfully",
