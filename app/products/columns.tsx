@@ -21,7 +21,7 @@ import {
   import { FilterIcon } from "lucide-react"
 import { useToast } from '@/hooks/use-toast';
 import { SheetUpdate } from './update-product';
-  
+import useCartStore from '@/store';
 
 export type Product = {
     id: string;
@@ -143,16 +143,28 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         id: "add-to-cart",
-        cell: ({ row }) => (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {}}
-          >
-            Add to Cart
-          </Button>
-        ),
-      },
+        cell: ({ row }) => {
+            const product = row.original;
+            const addToCart = useCartStore((state) => state.addProduct);
+            const { toast } = useToast();
+
+            return (
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                        addToCart(product);
+                        toast({
+                            title: "Added to cart",
+                            description: `${product.name} has been added to your cart.`,
+                        });
+                    }}
+                >
+                    Add to Cart
+                </Button>
+            );
+        },
+    },
     {
         id: "actions",
         cell: ({ row }) => {

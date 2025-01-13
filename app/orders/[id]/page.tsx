@@ -35,7 +35,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
       <Container className='mt-6 mb-8 '>
       {/* px-0 md:px-4 */}
         {/* <MagicCardDemo /> */}
-        <CardGridLayout data={order.productOrders}/>
+        <CardGridLayout data={order}/>
       </Container>
       {/* <InnerCardDemo />
 

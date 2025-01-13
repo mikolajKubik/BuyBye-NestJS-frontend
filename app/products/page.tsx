@@ -22,6 +22,7 @@ import {
 import { useState } from "react";
 import { SheetDemo } from './add-product';
 import { RefreshCcw } from "lucide-react"
+import SidePanelExample from '../test/page';
 
 // Fetch products from the specified API
 async function getProducts(): Promise<Product[]> {
@@ -50,6 +51,10 @@ export default async function Page() {
     console.log("creating page component...");
     return (
         <Container className='mt-6 mb-8'>
+            
+           
+            
+
             <section className="">
 
                 <div className="container mx-auto ">

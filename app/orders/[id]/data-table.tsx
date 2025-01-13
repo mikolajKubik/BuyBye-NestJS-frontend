@@ -34,8 +34,8 @@ export function ProductDataTable<TData, TValue>({
   return (
     <div 
     // className="rounded-md border "
-    className="rounded-md border col-span-1 md:col-span-2 bg-background  shadow-2xl whitespace-nowrap text-4xl "
-    // flex items-center justify-center cursor-pointer
+    className="rounded-md border col-span-1 md:col-span-2 bg-background  shadow-2xl whitespace-nowrap  "
+    // flex items-center justify-center cursor-pointer text-4xl
 
     >
       <Table className="bg-background rounded-md">
