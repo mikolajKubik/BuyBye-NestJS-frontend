@@ -27,15 +27,13 @@ import SidePanelExample from '../test/page';
 // Fetch products from the specified API
 async function getProducts(): Promise<Product[]> {
     const res = await fetch('http://localhost:3000/products', {
-        // Prevent caching
-        cache: 'no-store',
-        // next: { revalidate: 0 }
+        cache: 'no-store'
     });
     if (!res.ok) {
         throw new Error('Failed to fetch products');
     }
     const data = await res.json();
-    return data;
+    return data.filter((product: Product) => product.stock > 0);
 }
 
 
@@ -51,33 +49,17 @@ export default async function Page() {
     console.log("creating page component...");
     return (
         <Container className='mt-6 mb-8'>
-            
-           
-            
-
             <section className="">
 
                 <div className="container mx-auto ">
-                    {/* <div className="flex justify-between items-center mb-6">
-                        <h1 className="text-3xl font-bold">All Products</h1>
-                        <Button>Add Product</Button>
-                        <SheetDemo />
-                    </div> */}
                     <div className="flex justify-between items-center mb-2">
                         <h1 className="text-3xl font-bold mb-0  mt-[-1rem] ">All Products</h1>
                         <RefreshTable />
-
-
                     </div>
-
                     <DataTable columns={columns} data={data} />
-
-
-
                 </div>
             </section>
         </Container>
-
     );
 }
 

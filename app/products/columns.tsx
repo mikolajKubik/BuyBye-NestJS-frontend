@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -45,7 +46,15 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "description",
-        header: "Description",
+        header: () => (
+            <div className="text-left">
+                Description
+            </div>),
+        cell: ({ row }) => (
+           <div className="text-left w-64">
+                {row.original.description}
+            </div>
+        ),
     },
     {
         accessorKey: "stock",
@@ -63,12 +72,12 @@ export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: "price",
         header: () => (
-            <div className="text-right">
+            <div className="text-right w-24">
                 Price
             </div>
         ),
         cell: ({ row }) => (
-            <div className="text-right">
+            <div className="text-right w-24">
                 {row.original.price} EUR
             </div>
         ),
@@ -147,13 +156,41 @@ export const columns: ColumnDef<Product>[] = [
             const product = row.original;
             const addToCart = useCartStore((state) => state.addProduct);
             const { toast } = useToast();
-
+            const router = useRouter();
+            const updateProductStock = async (productId: string) => {
+                try {
+                    const response = await fetch(`http://localhost:3000/products/${productId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ stock: product.stock - 1 }),
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error("Failed to update stock");
+                    }
+                    router.refresh();    
+                    console.log("Stock updated successfully");
+                } catch (error) {
+                    console.error("Error updating stock:", error);
+                    toast({
+                        title: "Error",
+                        description: "Failed to update product stock."
+                    });
+                }
+            };
+    
             return (
                 <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => {
+                    onClick={async () => {
                         addToCart(product);
+    
+                        // Zmniejsz ilość produktu w magazynie
+                        //await updateProductStock(product.id);
+    
                         toast({
                             title: "Added to cart",
                             description: `${product.name} has been added to your cart.`,

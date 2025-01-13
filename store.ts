@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Product } from '@/app/orders/[id]/type'
 
-interface CartItem {
+export type CartItem = {
     id: string
     product: Product
     quantity: number
@@ -13,6 +13,8 @@ interface CartState {
     addProduct: (product: Product) => void
     removeProduct: (id: string) => void
     resetCart: () => void
+    increaseQuantity: (id: string) => void
+    decreaseQuantity: (id: string) => void
     // Optional: Add more actions like remove, clear, etc.
 }
 
@@ -44,6 +46,22 @@ const useCartStore = create<CartState>()(
                     items: state.items.filter((item) => item.product.id !== productId),
                 })),
             resetCart: () => set({ items: [] }),
+            increaseQuantity: (productId) =>
+                set((state) => ({
+                    items: state.items.map((item) =>
+                        item.product.id === productId
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    ),
+                })),
+            decreaseQuantity: (productId) =>
+                set((state) => ({
+                    items: state.items.map((item) =>
+                        item.product.id === productId && item.quantity > 1
+                            ? { ...item, quantity: item.quantity - 1 }
+                            : item
+                    ),
+                })),
         }),
         {
             name: 'cart-store',

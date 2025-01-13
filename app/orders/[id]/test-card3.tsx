@@ -47,34 +47,62 @@ export function CardGridLayout({ data }: CardGridLayoutProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[500px] md:h-[400px]">
-      <div className="grid grid-rows-3 gap-4">
-        <Card 
-        variant={"default"}
-          {...cardContent} 
-          className="row-span-2 bg-background flex flex-col items-start justify-center shadow-2xl whitespace-nowrap text-sm cursor-pointer overflow-visible text-ellipsis p-4"
-        >
-          <div>
-            <p className="mb-2"><strong>ID:</strong> {data.id}</p>
-            <p className="mb-2"><strong>Approval Date:</strong> {data.approvalDate}</p>
-            <p className="mb-2"><strong>Number of Products:</strong> {data.productOrders.length}</p>
-            <p className="mb-2"><strong>Order Value:</strong> ${calculateOrderValue(data.productOrders)}</p>
-            <div className="flex items-center">
-              <p><strong>Status:</strong></p>
-              <div className="ml-2">
-                {renderStatusBadge(data.status.name)}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto">
+      <div className="grid grid-rows-3 gap-4 md:grid-auto-rows-[1fr]">
+        <Card
+          variant={"default"}
+          {...cardContent}
+          className="row-span-2 flex flex-col p-6 shadow-2xl overflow-hidden bg-gradient-to-br from-background to-muted">
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-2xl font-semibold tracking-tight mb-4">Order Details</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-muted-foreground">Order ID</span>
+                  <span className="font-small">{data.id}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-muted-foreground">Approval Date</span>
+                  <span className="font-medium">{data.approvalDate}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-muted-foreground">Products</span>
+                  <span className="font-medium">{data.productOrders.length}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-muted-foreground">Total Value</span>
+                  <span className="font-semibold text-lg text-primary">
+                    ${calculateOrderValue(data.productOrders)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center pt-2">
+                  <span className="text-muted-foreground">Status</span>
+                  <div>{renderStatusBadge(data.status.name)}</div>
+                </div>
               </div>
             </div>
           </div>
         </Card>
-        <Card 
+        <Card
           {...cardContent}
-          className="row-span-1 bg-background flex flex-col items-start justify-center shadow-2xl whitespace-nowrap text-sm cursor-pointer overflow-visible text-ellipsis p-4"
+          className="row-span-1 flex flex-col p-6 shadow-2xl overflow-hidden bg-gradient-to-br from-background to-muted"
         >
-          <div>
-            <p className="mb-2"><strong>Username:</strong> {data.username}</p>
-            <p className="mb-2"><strong>Email:</strong> {data.email}</p>
-            <p className="mb-2"><strong>Phone:</strong> {data.phone}</p>
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold tracking-tight mb-2">Customer Information</h3>
+            <div className="space-y-2">
+              <div className="flex items-center text-sm">
+                <span className="text-muted-foreground w-20">Username</span>
+                <span className="font-medium">{data.username}</span>
+              </div>
+              <div className="flex items-center text-sm">
+                <span className="text-muted-foreground w-20">Email</span>
+                <span className="font-medium">{data.email}</span>
+              </div>
+              <div className="flex items-center text-sm">
+                <span className="text-muted-foreground w-20">Phone</span>
+                <span className="font-medium">{data.phone}</span>
+              </div>
+            </div>
           </div>
         </Card>
       </div>
@@ -82,5 +110,6 @@ export function CardGridLayout({ data }: CardGridLayoutProps) {
         <ProductDataTable columns={columns} data={data.productOrders} />
       </div>
     </div>
-  )
+  );
+  
 }

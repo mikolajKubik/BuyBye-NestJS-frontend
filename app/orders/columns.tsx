@@ -185,8 +185,6 @@ export const columns: ColumnDef<Order>[] = [
           
           const router = useRouter();
           
-      
-          // Funkcja do obsługi zmiany statusu
           const handleChangeStatus = async (newStatus: string) => {
             try {
               const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
