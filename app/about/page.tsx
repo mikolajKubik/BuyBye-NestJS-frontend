@@ -11,7 +11,7 @@ import Logo from "@/components/ui/logo";
 import { Section } from "@/components/ui/section";
 import { useToast } from '@/hooks/use-toast';
 
-export default function page() {
+export default function About() {
     const router = useRouter()
     return (
         <>

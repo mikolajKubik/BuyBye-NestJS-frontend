@@ -1,28 +1,10 @@
 // "use client";
-import dynamic from 'next/dynamic'
 import { DataTable } from '@/app/products/data-table';
 import { Product, columns } from './columns'; // Adjust the import path as needed
 import Container from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
-import { ConfettiButton } from '@/components/ui/confetti';
-// const ComponentC = dynamic(() => import('../components/data-table'), { ssr: false })
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { revalidatePath } from 'next/cache'
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
-import { useState } from "react";
-import { SheetDemo } from './add-product';
 import { RefreshCcw } from "lucide-react"
-import SidePanelExample from '../test/page';
 
 // Fetch products from the specified API
 async function getProducts(): Promise<Product[]> {
@@ -33,7 +15,7 @@ async function getProducts(): Promise<Product[]> {
         throw new Error('Failed to fetch products');
     }
     const data = await res.json();
-    return data.filter((product: Product) => product.stock > 0);
+    return data;
 }
 
 

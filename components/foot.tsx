@@ -12,10 +12,8 @@ export default function DefaultFooter() {
             <FooterBottom className="mt-0 flex flex-col items-center gap-4 sm:flex-col md:flex-row">
               <div>© 2024 DIK group. All rights reserved</div>
               <div className="flex items-center gap-4">
-                <a href="https://github.com/kamilDzierzawski">GitHub</a>|
+                <a href="https://github.com/princeBugs33/princeBugs33-V_sem_aji_z4">GitHub</a>|
                 <Link href="/about">About</Link>
-                {/* <ModeToggle /> */}
-
               </div>
             </FooterBottom>
           </Footer>

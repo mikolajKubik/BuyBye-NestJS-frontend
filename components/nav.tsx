@@ -3,7 +3,6 @@ import React from 'react'
 import Navigation from "@/components/ui/navigation";
 import { Button } from "@/components/ui/button";
 import {
-  NavbarCenter,
   Navbar as NavbarComponent,
   NavbarLeft,
   NavbarRight,
@@ -12,9 +11,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { IconPhFactory } from "@/components/logos/IconPhFactory";
 import Link from 'next/link';
-import { ConfettiButton } from './ui/confetti';
-import { Cart } from './logos/cart';
-import { ModeToggle } from './ui/mode-toggle';
 import { CheckboxDemo } from './ui/dark-mode-toggle-checkbox';
 
 export default function DefaultNavbar() {
@@ -33,20 +29,9 @@ export default function DefaultNavbar() {
                 Buy&Bye
               </Link>
             </NavbarLeft>
-            {/* <NavbarCenter>
-            </NavbarCenter> */}
-
-
             <NavbarRight>
               <Navigation />
               <CheckboxDemo />
-              {/* <a href="/" className="hidden text-sm md:block">
-                    Sign in
-                  </a> */}
-
-              {/* <Button variant="default" asChild>
-                
-              </Button> */}
               <Sheet>
                 <SheetTrigger asChild>
                   <Button
@@ -60,30 +45,18 @@ export default function DefaultNavbar() {
                 </SheetTrigger>
                 <SheetContent side="right">
                   <nav className="grid gap-6 text-lg font-medium">
-                    <a
-                      href="/"
-                      className="flex items-center gap-2 text-xl font-bold"
-                    >
-                      <span>Buy&Bye</span>
-                    </a>
-                    <a
-                      href="/"
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      Getting Started
-                    </a>
-                    <a
-                      href="/"
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      Components
-                    </a>
-                    <a
-                      href="/"
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      Documentation
-                    </a>
+                    <Link href={`/`} className="flex items-center gap-2 text-xl font-bold" passHref>
+                        <span>Buy&Bye</span>
+                    </Link>
+                    <Link href={`/products`} className="text-muted-foreground hover:text-foreground" passHref>
+                        Products
+                    </Link>
+                    <Link href={`/orders`} className="text-muted-foreground hover:text-foreground" passHref>
+                        Orders
+                    </Link>
+                    <Link href={`/cart`} className="text-muted-foreground hover:text-foreground" passHref>
+                        Cart
+                    </Link>
                   </nav>
                 </SheetContent>
               </Sheet>

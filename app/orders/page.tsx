@@ -27,7 +27,7 @@ export async function refreshData() {
 
 export function RefreshTable() {
   return (
-      <div className=''>
+      <div className='mb-2'>
 
           <form action={refreshData}>
               <Button
@@ -51,15 +51,11 @@ export default async function Page() {
           <section className="">
 
               <div className="container mx-auto ">
-                  {/* <div className="flex justify-between items-center mb-6">
-                      <h1 className="text-3xl font-bold">All Products</h1>
-                      <Button>Add Product</Button>
-                      <SheetDemo />
-                  </div> */}
-                  <div className="flex justify-between items-center mb-2">
-                      <h1 className="text-3xl font-bold mb-0  mt-[-1rem] ">All Orders</h1>
+                  {/* <div className="flex justify-between items-center mb-2"> */}
+                      <h1 className="text-3xl font-bold mb-2   ">All Orders</h1> 
+                      {/* mt-[-1rem] */}
                       <RefreshTable />
-                  </div>
+                  {/* </div> */}
 
                   <DataTable columns={columns} data={data} />
               </div>

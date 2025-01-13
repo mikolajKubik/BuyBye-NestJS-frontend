@@ -39,7 +39,7 @@ import {
   } from "@/components/ui/dropdown-menu"
   import { FilterIcon } from "lucide-react"
 import { useToast } from '@/hooks/use-toast';
-import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
+import { OpenInNewWindowIcon, MinusIcon } from "@radix-ui/react-icons";
 
 
   
@@ -148,11 +148,53 @@ export const columns: ColumnDef<Order>[] = [
     },
     {
       accessorKey: "approvalDate",
-      header: "Approval Date",
+      header: ({ column }) => {
+        return (
+            <div className="flex items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 data-[state=open]:bg-accent"
+              >
+                <span>Approval Date</span>
+                {column.getIsSorted() === 'desc' ? (
+                <ArrowDownIcon className="ml-2 h-4 w-4" />
+                ) : column.getIsSorted() === 'asc' ? (
+                <ArrowUpIcon className="ml-2 h-4 w-4" />
+                ) : (
+                <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
+                )}
+              </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center">
+              <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+                <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Asc
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+                <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Desc
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => column.clearSorting()}>
+                <ChevronsUpDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Default
+              </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            </div>
+        );
+      },
+      sortingFn: (rowA, rowB) => {
+        const dateA = rowA.original.approvalDate ? new Date(rowA.original.approvalDate).getTime() : 0;
+        const dateB = rowB.original.approvalDate ? new Date(rowB.original.approvalDate).getTime() : 0;
+        return dateA - dateB;
+      },
       cell: ({ row }) => {
         const approvalDate = row.original.approvalDate;
         if (!approvalDate) {
-          return <div>-</div>;
+          return <div className="text-muted-foreground"><MinusIcon className="h-4 w-4" /></div>;
         }
     
         const date = new Date(approvalDate);

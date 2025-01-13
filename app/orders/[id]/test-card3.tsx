@@ -14,6 +14,8 @@ import {
   Bell, 
   Info 
 } from 'lucide-react'
+import { OpenInNewWindowIcon, MinusIcon } from "@radix-ui/react-icons";
+
 
 interface CardGridLayoutProps {
   data: Order
@@ -23,6 +25,15 @@ export function CardGridLayout({ data }: CardGridLayoutProps) {
   const cardContent = {
     role: "button",
     "aria-label": "Interactive card"
+  }
+
+  const formatDate = (date: string | null | undefined) => {
+    if (!date) return <MinusIcon />;
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   }
 
   const renderStatusBadge = (status: string) => {
@@ -45,7 +56,7 @@ export function CardGridLayout({ data }: CardGridLayoutProps) {
       return total + parseFloat(productOrder.product.price) * productOrder.quantity
     }, 0).toFixed(2)
   }
-
+  console.log(data);
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto">
       <div className="grid grid-rows-3 gap-4 md:grid-auto-rows-[1fr]">
@@ -63,7 +74,7 @@ export function CardGridLayout({ data }: CardGridLayoutProps) {
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-muted-foreground">Approval Date</span>
-                  <span className="font-medium">{data.approvalDate}</span>
+                  <span className="font-medium">{formatDate(data.approvalDate)}</span>
                 </div>
                 <div className="flex justify-between items-center border-b pb-2">
                   <span className="text-muted-foreground">Products</span>

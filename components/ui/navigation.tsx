@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import {
@@ -54,6 +55,12 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export default function Navigation() {
+  const pathname = usePathname();
+
+  const isActive = (path: string) => {
+    return pathname === path;
+  };
+
   return (
     <NavigationMenu className="hidden md:flex">
       <NavigationMenuList>
@@ -109,21 +116,36 @@ export default function Navigation() {
         
         <NavigationMenuItem>
           <Link href="/products" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink
+              className={cn(
+                navigationMenuTriggerStyle(),
+                isActive('/products') && "bg-accent text-accent-foreground"
+              )}
+            >
               Products
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/orders" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink
+              className={cn(
+                navigationMenuTriggerStyle(),
+                isActive('/orders') && "bg-accent text-accent-foreground"
+              )}
+            >
               Orders
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/cart" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink
+              className={cn(
+                navigationMenuTriggerStyle(),
+                isActive('/cart') && "bg-accent text-accent-foreground"
+              )}
+            >
               Cart
             </NavigationMenuLink>
           </Link>

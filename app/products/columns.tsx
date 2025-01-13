@@ -31,7 +31,7 @@ export type Product = {
     stock: number;
     price: string;
     weight: string;
-    category: Category; // Simplified to just a string
+    category: Category;
 };
 
 export type Category = {
@@ -96,17 +96,9 @@ export const columns: ColumnDef<Product>[] = [
         ),
     },
     {
-        accessorKey: "category.name", // Access only the name field of the category
-        // header: "Category",
+        accessorKey: "category.name",
         header: ({ column }) => {
             return (
-                //   <Button
-                //     variant="ghost"
-                //     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                //   >
-                //     Category
-                //     <ArrowUpDown className="ml-2 h-4 w-4" />
-                //   </Button>
                 <div className="text-center flex items-center justify-center space-x-2 ">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -157,34 +149,12 @@ export const columns: ColumnDef<Product>[] = [
             const addToCart = useCartStore((state) => state.addProduct);
             const { toast } = useToast();
             const router = useRouter();
-            const updateProductStock = async (productId: string) => {
-                try {
-                    const response = await fetch(`http://localhost:3000/products/${productId}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ stock: product.stock - 1 }),
-                    });
-    
-                    if (!response.ok) {
-                        throw new Error("Failed to update stock");
-                    }
-                    router.refresh();    
-                    console.log("Stock updated successfully");
-                } catch (error) {
-                    console.error("Error updating stock:", error);
-                    toast({
-                        title: "Error",
-                        description: "Failed to update product stock."
-                    });
-                }
-            };
     
             return (
                 <Button
                     variant="outline"
                     size="sm"
+                    disabled={product.stock === 0}
                     onClick={async () => {
                         addToCart(product);
     

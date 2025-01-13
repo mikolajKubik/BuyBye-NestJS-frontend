@@ -1,6 +1,5 @@
 "use client"
 
-import { RefreshCcw } from "lucide-react"
 import * as React from "react"
 import {
     ColumnDef,
@@ -76,9 +75,7 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm bg-background"
                     />
                 </div>
-                {/* <RefreshTable /> */}
-                
-                
+
             </div>
         
         <div className="mb-0">

@@ -38,8 +38,8 @@ export function SheetDemo() {
     const { toast } = useToast();
     const { items, resetCart } = useCartStore();
   
-    // Log items after retrieving them from the store
-    console.log('Cart items:', items);
+    // // Log items after retrieving them from the store
+    // console.log('Cart items:', items);
   
     // Mapowanie produktów na { id, quantity }
     const productPayload = items.map((item) => ({
@@ -87,7 +87,7 @@ export function SheetDemo() {
   
         resetCart();
   
-        router.refresh();
+        router.push('/products');
   
         toast({
           title: "Success",
@@ -197,7 +197,7 @@ export function SheetDemo() {
                           const screenHeight = window.innerHeight;
                           const angleRad = Math.atan(screenHeight / screenWidth);
                           const angleDeg = angleRad * (180 / Math.PI);
-                          const finalAngle = 180 - 1.6 * angleDeg;
+                          const finalAngle = 1.6 * angleDeg;
                           return finalAngle;
                         },
                       }}

@@ -44,28 +44,12 @@ export function SheetDemo() {
     const { toast } = useToast()
     const form = useForm<CreateProductInput>({
         resolver: zodResolver(createProductSchema),
-        mode: "onChange", // Add this line to enable validation on change
-        // defaultValues: {
-        //     name: "",
-        //     description: "",
-        //     price: undefined,
-        //     weight: undefined,
-        //     categoryName: "",
-        //     stock: undefined,
-        // },
+        mode: "onChange",
     });
 
     const router = useRouter();
 
     const onSubmit = async (data: CreateProductInput) => {
-        // if (!form.formState.isValid) {
-        //     toast({
-        //         title: "Validation Error",
-        //         description: "Please fill all required fields correctly",
-        //         variant: "destructive",
-        //     });
-        //     return;
-        // }
 
         try {
             const response = await fetch('http://localhost:3000/products', {
@@ -100,37 +84,10 @@ export function SheetDemo() {
                 variant: "destructive",
             });
         }
-        // try {
-        //     const response = await fetch("http://localhost:3000/products", {
-        //         method: "POST",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify(data),
-        //     });
-
-        //     if (response.ok) {
-        //         console.log("Product saved successfully.");
-        //         form.reset();
-        //     } else {
-        //         const errorBody = await response.text();
-        //         console.error("Error saving product:", errorBody);
-        //     }
-        // } catch (error) {
-        //     console.error("Fetch error:", error);
-        // }
     };
 
     return (
-        <Sheet
-        //     open={isOpen}
-        // onOpenChange={(newValue) => {
-        //   if (newValue) setIsOpen(true); // when it's closed, allow opening it
-
-        //   // when it's opened
-        //   if (form.formState.isValid) setIsOpen(newValue);
-
-        // otherwise, don't do anything
-        // }}
-        >
+        <Sheet>
             <SheetTrigger asChild>
                 <Button variant="outline">Add Product</Button>
             </SheetTrigger>
@@ -280,25 +237,6 @@ export function SheetDemo() {
 
                         {/* Submit Button */}
                         <SheetFooter >
-                            {/* <SheetClose asChild>
-                                <div className="relative mt-4">
-                                    <ConfettiButton triggerConfetti={form.formState.isValid} variant="secondary" options={{
-                                        get angle() {
-                                            const screenWidth = window.innerWidth;
-                                            const screenHeight = window.innerHeight;
-                                            const angleRad = Math.atan(screenHeight / screenWidth);
-                                            const angleDeg = angleRad * (180 / Math.PI);
-                                            const finalAngle = 180 - (1.6 * angleDeg);
-                                            console.log(`Angle (Degrees): ${finalAngle}, Width: ${screenWidth}, Height: ${screenHeight}`);
-                                            return finalAngle;
-                                        },
-                                    }} type="submit"
-                                    
-                                    >Save Product 
-                                    </ConfettiButton>
-                                </div>
-                             </SheetClose> */}
-                             
                             {form.formState.isValid ? (
                                 <SheetClose asChild>
                                     <div className="relative mt-4">
@@ -339,29 +277,3 @@ export function SheetDemo() {
         </Sheet>
     );
 }
-
-
-
-// import { useRouter } from "next/navigation";
-
-// export function useRefreshRouter() {
-//     const router = useRouter();
-//     return () => {
-//         router.refresh();
-//     };
-// }
-
-{/* Category Name Field */ }
-{/* <FormField
-                            control={form.control}
-                            name="categoryName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <Label htmlFor="categoryName">Category</Label>
-                                    <FormControl>
-                                        <Input placeholder="Toys" className="border-transparent bg-muted shadow-none" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        /> */}

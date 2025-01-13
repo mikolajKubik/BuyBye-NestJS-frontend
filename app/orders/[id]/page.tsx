@@ -1,6 +1,7 @@
 import Container from '@/components/ui/container'
 import { notFound } from 'next/navigation'
 import React from 'react'
+// import { Order } from '../columns'
 import { Order } from './type'
 import { MagicCard } from '@/components/ui/magic-card'
 import { MagicCardDemo } from './test-card'
@@ -12,9 +13,13 @@ import { columns } from './columns'
 
 async function getOrder(id: string): Promise<Order | null> {
   try {
-    const res = await fetch(`http://localhost:3000/orders/${id}`)
+    const res = await fetch(`http://localhost:3000/orders/${id}`, {
+      // Prevent caching
+      cache: 'no-store',
+      // next: { revalidate: 0 }
+  });
     if (!res.ok) return null
-    // console.log(res.json())
+    //console.log(res.json())
     return res.json()
   } catch (error) {
     return null
