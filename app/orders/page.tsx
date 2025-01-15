@@ -10,7 +10,6 @@ async function getOrders(): Promise<Order[]> {
   const res = await fetch('http://localhost:3000/orders', {
       // Prevent caching
       cache: 'no-store',
-      // next: { revalidate: 0 }
   });
   if (!res.ok) {
       throw new Error('Failed to fetch orders');
@@ -19,7 +18,6 @@ async function getOrders(): Promise<Order[]> {
   return data;
 }
 
-// Add refresh action
 export async function refreshData() {
   'use server'
   revalidatePath('/orders');
@@ -51,11 +49,8 @@ export default async function Page() {
           <section className="">
 
               <div className="container mx-auto ">
-                  {/* <div className="flex justify-between items-center mb-2"> */}
-                      <h1 className="text-3xl font-bold mb-2   ">All Orders</h1> 
-                      {/* mt-[-1rem] */}
+                      <h1 className="text-3xl font-bold mb-2">All Orders</h1> 
                       <RefreshTable />
-                  {/* </div> */}
 
                   <DataTable columns={columns} data={data} />
               </div>

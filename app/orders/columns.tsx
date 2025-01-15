@@ -102,7 +102,6 @@ export const columns: ColumnDef<Order>[] = [
                           confetti();
                         }
                       }
-                    //   confetti();
                     }}
                   >
                     <DropdownMenuRadioItem value="all">All statuses</DropdownMenuRadioItem>

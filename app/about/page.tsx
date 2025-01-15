@@ -27,16 +27,6 @@ export default function About() {
                     </div>
                 </div>
             </Section>
-
-            {/* <Container className='mt-4'>
-                <h1>About Page</h1>
-                <div>page</div>
-                <Button
-                    onClick={() => router.push('/')}
-                    className='m-4'
-                >Home</Button>
-                <ToastWithTitle />
-            </Container> */}
         </>
     )
 }

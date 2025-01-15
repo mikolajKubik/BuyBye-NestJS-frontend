@@ -299,29 +299,3 @@ export function SheetUpdate({ product }: SheetUpdateProps) {
         </Sheet>
     );
 }
-
-
-
-// import { useRouter } from "next/navigation";
-
-// export function useRefreshRouter() {
-//     const router = useRouter();
-//     return () => {
-//         router.refresh();
-//     };
-// }
-
-{/* Category Name Field */ }
-{/* <FormField
-                            control={form.control}
-                            name="categoryName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <Label htmlFor="categoryName">Category</Label>
-                                    <FormControl>
-                                        <Input placeholder="Toys" className="border-transparent bg-muted shadow-none" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        /> */}

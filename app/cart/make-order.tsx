@@ -38,9 +38,6 @@ export function SheetDemo() {
     const { toast } = useToast();
     const { items, resetCart } = useCartStore();
   
-    // // Log items after retrieving them from the store
-    // console.log('Cart items:', items);
-  
     // Mapowanie produktów na { id, quantity }
     const productPayload = items.map((item) => ({
       id: item.product.id,

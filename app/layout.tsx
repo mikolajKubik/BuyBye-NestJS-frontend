@@ -7,7 +7,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
 import GridPattern from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
-// import { ThemeProvider, useTheme } from "next-themes";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
