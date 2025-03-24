@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🖥️ Buy&Bye Frontend
 
-## Getting Started
+This is the **frontend application** for the [Buy&Bye NestJS Backend](https://github.com/princeBugs33/BuyBye-NestJS-backend) — a simple CRUD-based store system for managing products, orders, and categories.
 
-First, run the development server:
+The frontend is developed using **Next.js**, styled with **Tailwind CSS**, and leverages **shadcn/ui** for modern, accessible UI components.
+
+---
+
+## 🚀 Tech Stack
+
+- ⚡ **Next.js** – React framework for server-rendered apps
+- 🎨 **Tailwind CSS** – Utility-first CSS framework
+- 🧩 **shadcn/ui** – Headless and accessible component library
+- 🔗 Connects to [Buy&Bye NestJS Backend](https://github.com/princeBugs33/BuyBye-NestJS-backend)
+
+---
+
+## 📦 Getting Started
+
+### 1️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 2️⃣ Start development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at `http://localhost:3001`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Make sure your [Buy&Bye Backend](https://github.com/princeBugs33/BuyBye-NestJS-backend) is running and configured properly to allow API access from the frontend.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🖼️ Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+### 🏠 Main View  
+![Main](screenshots/main.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🛒 Cart  
+![Cart](screenshots/cart.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📦 Products  
+![Products](screenshots/products.png)
 
-## Deploy on Vercel
+### ➕ Add Product  
+![Add Product](screenshots/add_product.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📑 Orders  
+![Orders](screenshots/orders.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📋 Order Details  
+![Order Details](screenshots/order_details.png)
+
+### 🧾 Make Order  
+![Make Order](screenshots/make_order.png)
